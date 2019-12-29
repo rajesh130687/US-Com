@@ -21,7 +21,7 @@ drop table if exists ORDSCH.ORDERS;
 drop table if exists ORDSCH.ORDER_STATUS;
 
 
-create table USRSCH.USERS(
+create table if not exists USRSCH.USERS(
 	USER_ID	integer primary key,
 	USER_NAME varchar(50) not null,
 	ADDRESS varchar(500) not null,
@@ -33,7 +33,7 @@ create table USRSCH.USERS(
 	UPDATE_USR integer
 );
 
-create table ORDSCH.ST_ORDER_STATUS(
+create table if not exists ORDSCH.ST_ORDER_STATUS(
 	ST_ORDER_STATUS_ID integer primary key,
 	ST_ORDER_STATUS_NAME varchar(20) not null,
 	CREATE_DT timestamp not null,
@@ -42,7 +42,7 @@ create table ORDSCH.ST_ORDER_STATUS(
 	UPDATE_USR integer references USRSCH.USERS(USER_ID)
 );
 
-create table USRSCH.ST_ROLES(
+create table if not exists USRSCH.ST_ROLES(
 	ST_ROLE_ID integer primary key,
 	ST_ROLE_NAME varchar(20) not null,
 	CREATE_DT timestamp not null,
@@ -51,7 +51,7 @@ create table USRSCH.ST_ROLES(
 	UPDATE_USR integer references USRSCH.USERS(USER_ID)
 );
 
-create table USRSCH.USER_ROLES(
+create table if not exists USRSCH.USER_ROLES(
 	USER_ROLE_ID integer primary key,
 	USER_ID integer references USRSCH.USERS(USER_ID) not null,
 	ST_ROLE_ID integer references USRSCH.ST_ROLES(ST_ROLE_ID) not null,
@@ -61,7 +61,7 @@ create table USRSCH.USER_ROLES(
 	UPDATE_USR integer references USRSCH.USERS(USER_ID)
 );
 
-create table PRDSCH.PRODUCTS(
+create table if not exists PRDSCH.PRODUCTS(
 	PRODUCT_ID integer primary key,
 	PRODUCT_NAME varchar(50) not null,
 	PRODUCT_DESC varchar(500) not null,
@@ -73,7 +73,7 @@ create table PRDSCH.PRODUCTS(
 	UPDATE_USR integer references USRSCH.USERS(USER_ID)
 );
 
-create table ORDSCH.ORDERS(
+create table if not exists ORDSCH.ORDERS(
 	ORDER_ID integer primary key,
 	USER_ID integer references USRSCH.USERS(USER_ID) not null,
 	VENDOR_ID integer references USRSCH.USERS(USER_ID) not null,
@@ -85,7 +85,7 @@ create table ORDSCH.ORDERS(
 	UPDATE_USR integer references USRSCH.USERS(USER_ID)
 );
 
-create table ORDSCH.ORDER_STATUS(
+create table if not exists ORDSCH.ORDER_STATUS(
 	ORDER_STATUS_ID integer primary key,
 	ORDER_ID integer references ORDSCH.ORDERS(ORDER_ID) not null,
 	ST_ORDER_STATUS_ID integer references ORDSCH.ST_ORDER_STATUS(ST_ORDER_STATUS_ID) not null,
